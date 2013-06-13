@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelProtocolHandler", "TelProtocolHandler\TelProtocolHandler.csproj", "{9021FA02-AF4A-41D0-8287-3E23B0457E16}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9021FA02-AF4A-41D0-8287-3E23B0457E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9021FA02-AF4A-41D0-8287-3E23B0457E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9021FA02-AF4A-41D0-8287-3E23B0457E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9021FA02-AF4A-41D0-8287-3E23B0457E16}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

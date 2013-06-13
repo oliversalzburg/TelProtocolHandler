@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        "ITapi3"
+    </assembly>
+    <members>
+        <member name="P:JulMar.Tapi3.TapiRequestEventArgs.Comment">
+            <summary />
+        </member>
+        <member name="P:JulMar.Tapi3.TapiRequestEventArgs.CalledParty">
+            <summary />
+        </member>
+        <member name="P:JulMar.Tapi3.TapiRequestEventArgs.AppName">
+            <summary />
+        </member>
+        <member name="P:JulMar.Tapi3.TapiRequestEventArgs.DestAddress">
+            <summary />
+        </member>
+        <member name="P:JulMar.Tapi3.TapiRequestEventArgs.RequestMode">
+            <summary>
+The LINEREQUESTMODE_xxx identifier
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiRequestEventArgs.RegistrationInstance">
+            <summary>
+The registration instance
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.TapiRequestEventArgs">
+            <summary>
+This structure details the assisted telephony requests and is passed with a TE_REQUEST event
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.LINEREQUESTMODE">
+            <summary>
+Describe different types of telephony requests that can be made from one application to another
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallInfoChangeEventArgs.Cause">
+            <summary>
+The element in the call that has changed
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallInfoChangeEventArgs.Call">
+            <summary>
+The call which has changed
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.TapiCallInfoChangeEventArgs">
+            <summary>
+This event argument structure is passed with a CE_CALLINFO event
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.CALLINFOCHANGE_CAUSE">
+            <summary>
+The different types of call information which may change
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallHubEventArgs.CallHub">
+            <summary>
+The call hub object
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallHubEventArgs.Call">
+            <summary>
+The call associated with the hub (may be null)
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.TapiCallHubEventArgs">
+            <summary>
+This event argument structure is supplied with a CE_CALLHUB event
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallMediaEventArgs.Cause">
+            <summary>
+The cause of the media event
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallMediaEventArgs.Event">
+            <summary>
+The media event being reported
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallMediaEventArgs.Error">
+            <summary>
+Any error reported (may be null)
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallMediaEventArgs.Stream">
+            <summary>
+The stream associated with the media event (may be null)
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallMediaEventArgs.Terminal">
+            <summary>
+The terminal associated with the media event (may be null)
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallMediaEventArgs.Call">
+            <summary>
+The call associated with the media event (may be null)
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.TapiCallMediaEventArgs">
+            <summary>
+This event argument structure is supplied with a TE_CALLMEDIA event
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.CALL_MEDIA_EVENT_CAUSE">
+            <summary>
+The call media event cause
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.CALL_MEDIA_EVENT">
+            <summary>
+Different call media event types
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallStateEventArgs.Cause">
+            <summary>
+The cause for the call state change
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallStateEventArgs.State">
+            <summary>
+The new status of the call
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallStateEventArgs.Call">
+            <summary>
+The call which has changed state
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.TapiCallStateEventArgs">
+            <summary>
+The event structure reported with a TE_CALLSTATE event
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.CALL_STATE">
+            <summary>
+The different call states that a call may be in
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.CALL_STATE_EVENT_CAUSE">
+            <summary>
+The different call state event causes
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallNotificationEventArgs.Event">
+            <summary>
+The ownership of the call
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiCallNotificationEventArgs.Call">
+            <summary>
+The new call being reported
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.TapiCallNotificationEventArgs">
+            <summary>
+This event structure is passed with a TE_CALLNOTIFICATION event
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.CALL_NOTIFICATION_EVENT">
+            <summary>
+The different events reported with a TapiCallNotificationEventArgs
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiAddressChangedEventArgs.Event">
+            <summary>
+The event being reported
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiAddressChangedEventArgs.Terminal">
+            <summary>
+The Terminal object (may be null)
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiAddressChangedEventArgs.Address">
+            <summary>
+The Address object
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.TapiAddressChangedEventArgs">
+            <summary>
+The event structure reported with a TE_ADDRESS event
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.ADDRESS_EVENT">
+            <summary>
+The different ADDRESS level events which are reported with a TapiAddressChangedEventArgs structure
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiObjectEventArgs.Event">
+            <summary>
+The event being reported
+</summary>
+        </member>
+        <member name="P:JulMar.Tapi3.TapiObjectEventArgs.Address">
+            <summary>
+The Address object
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.TapiObjectEventArgs">
+            <summary>
+The TapiObjectEventArgs class is sent with each TE_TAPIOBJECT event.
+</summary>
+        </member>
+        <member name="T:JulMar.Tapi3.TAPIOBJECT_EVENT">
+            <summary>
+The TAPIOBJECT_EVENT enum describes TAPI object events.
+</summary>
+        </member>
+    </members>
+</doc>
