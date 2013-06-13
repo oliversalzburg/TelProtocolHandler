@@ -14,7 +14,7 @@ ECHO. >> RegisterProtocolHandler.reg
 ECHO [HKEY_CLASSES_ROOT\tel\shell\open] >> RegisterProtocolHandler.reg
 ECHO. >> RegisterProtocolHandler.reg
 ECHO [HKEY_CLASSES_ROOT\tel\shell\open\command] >> RegisterProtocolHandler.reg
-ECHO @="\"%TPH_PATH%bin\\Release\\TelProtocolHandler.exe\" \"%%1\"" >> RegisterProtocolHandler.reg
+ECHO @="\"%TPH_PATH%TelProtocolHandler\\bin\\Release\\TelProtocolHandler.exe\" \"%%1\"" >> RegisterProtocolHandler.reg
 ECHO. >> RegisterProtocolHandler.reg
 
 start RegisterProtocolHandler.reg
