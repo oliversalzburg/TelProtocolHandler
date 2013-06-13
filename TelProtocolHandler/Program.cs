@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using JulMar.Tapi3;
 
 namespace TelProtocolHandler {
   internal class Program {
@@ -17,6 +18,14 @@ namespace TelProtocolHandler {
         }
 
         string phoneNumber = phoneNumberInput.Substring( Protocol.Length );
+
+        TTapi tapi = new TTapi();
+        //TCall call = null; TAddress modemAddr = null;
+        int foundDevices = tapi.Initialize();
+        Console.WriteLine( "{0} devices found", foundDevices );
+        foreach( TAddress addr in tapi.Addresses ) {
+          Console.WriteLine( addr.AddressName );
+        }
 
         Console.WriteLine( "Calling '{0}'...", phoneNumber );
       }
