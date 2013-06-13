@@ -1,6 +1,6 @@
 @ECHO OFF
 SETLOCAL
-SET SOLUTION_FILENAME=OmniUdp.sln
+SET SOLUTION_FILENAME=TelProtocolHandler.sln
 IF EXIST packages\NuGet.exe (
   SET EnableNuGetPackageRestore=true
   echo Installing NuGet pacakges...
