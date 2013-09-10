@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using JulMar.Tapi3;
 
@@ -19,6 +20,8 @@ namespace TelProtocolHandler {
 
         string phoneNumber = phoneNumberInput.Substring( Protocol.Length );
 
+        const string lineToUse = "Obelix (Aastra5370/5370ip)";
+
         TTapi tapi = new TTapi();
         //TCall call = null; TAddress modemAddr = null;
         int foundDevices = tapi.Initialize();
@@ -27,10 +30,14 @@ namespace TelProtocolHandler {
           Console.WriteLine( addr.AddressName );
         }
 
+        TAddress line = tapi.Addresses.SingleOrDefault(a => a.AddressName == lineToUse);
+        TCall call = line.CreateCall("0" + phoneNumber, LINEADDRESSTYPES.PhoneNumber, TAPIMEDIATYPES.AUDIO);
+        call.Connect(false);
+
         Console.WriteLine( "Calling '{0}'...", phoneNumber );
       }
 
-      Thread.Sleep( TimeSpan.FromSeconds( 5.0 ) );
+      //Thread.Sleep( TimeSpan.FromSeconds( 5.0 ) );
     }
   }
 }
