@@ -5,6 +5,9 @@ using JulMar.Tapi3;
 
 namespace TelProtocolHandler {
   internal class Program {
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
     private static string Protocol = "tel:";
 
     private static void Main( string[] args ) {
@@ -18,12 +21,21 @@ namespace TelProtocolHandler {
           return;
         }
 
+        var currentProcess = System.Diagnostics.Process.GetCurrentProcess();
+        Console.WriteLine(currentProcess.MainWindowTitle);
+
+        IntPtr hWnd = currentProcess.MainWindowHandle;
+        if (hWnd != IntPtr.Zero) {
+          //Hide the window
+          ShowWindow(hWnd, 0); // 0 = SW_HIDE
+        }
+
         string phoneNumber = phoneNumberInput.Substring( Protocol.Length );
 
+        // TODO: Replace with configuration value
         const string lineToUse = "Obelix (Aastra5370/5370ip)";
 
         TTapi tapi = new TTapi();
-        //TCall call = null; TAddress modemAddr = null;
         int foundDevices = tapi.Initialize();
         Console.WriteLine( "{0} devices found", foundDevices );
         foreach( TAddress addr in tapi.Addresses ) {
@@ -36,8 +48,6 @@ namespace TelProtocolHandler {
 
         Console.WriteLine( "Calling '{0}'...", phoneNumber );
       }
-
-      //Thread.Sleep( TimeSpan.FromSeconds( 5.0 ) );
     }
   }
 }
