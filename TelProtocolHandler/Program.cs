@@ -67,7 +67,13 @@ namespace TelProtocolHandler {
 
         // Always assumes 0 prefix is needed to dial out.
         TCall call = line.CreateCall( "0" + phoneNumber, LINEADDRESSTYPES.PhoneNumber, TAPIMEDIATYPES.AUDIO );
-        call.Connect( false );
+        try {
+          call.Connect( false );
+
+        } catch( TapiException ex ) {
+          Console.WriteLine( ex.Message );
+          return;
+        }
 
         Console.WriteLine( "Calling '{0}'...", phoneNumber );
       }
