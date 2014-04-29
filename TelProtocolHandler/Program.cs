@@ -9,11 +9,39 @@ namespace TelProtocolHandler {
     internal class Program {
 
         private static string Protocol = "tel:";
+        private static TTapi tapi = new TTapi();
 
         private static void ConfigTAPILine () {
             Application.Run(new SelectTAPIForm());
-            return;
+            CheckForTAPILineErrors();
         }
+
+        private static void CheckForTAPILineErrors () {
+            if (string.IsNullOrEmpty(Configuration.Container.lineToUse)) {
+                Debug.WriteLine("No line configuration value set. Starting settings application...");
+                ConfigTAPILine();
+                return;
+            }
+
+            string lineToUse = Configuration.Container.lineToUse;
+
+            if (string.IsNullOrEmpty(lineToUse)) {
+                Debug.WriteLine("No TAPI line selected!");
+                if (MessageBox.Show("No TAPI line selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK) { }
+                return;
+            }
+
+            TAddress line = tapi.Addresses.SingleOrDefault(a => a.AddressName == lineToUse);
+            if (null == line) {
+                Debug.WriteLine(String.Format("Unable to find TAPI line with name '{0}'!", lineToUse));
+                if (MessageBox.Show(String.Format("Unable to find TAPI line with name '{0}'!\nDo you wish to select another TAPI line?", lineToUse), "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes) {
+                    ConfigTAPILine();
+                    return;
+                } else {
+                Environment.Exit(0); }
+            }
+        }
+
 
         [STAThread]
         private static void Main (string[] args) {
@@ -34,43 +62,20 @@ namespace TelProtocolHandler {
                     return;
                 }
 
-                
-                string phoneNumber = phoneNumberInput.Substring(Protocol.Length);
-
                 // Set line configuration value
-                TTapi tapi = new TTapi();
                 tapi.Initialize();
-
                 Configuration.Load();
-                if (Configuration.Container.lineToUse.Equals("")) {
-                    Debug.WriteLine("No line configuration value set. Starting settings application...");
-                    ConfigTAPILine();
-                }
-
-            AfterConfig:
+                CheckForTAPILineErrors();
                 string lineToUse = Configuration.Container.lineToUse;
                 Debug.WriteLine(String.Format("Line configuration value is '{0}'.", lineToUse));
 
-                if (string.IsNullOrEmpty(lineToUse)) {
-                    Debug.WriteLine("No TAPI line selected!");
-                    if (MessageBox.Show("No TAPI line selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK) { }
-                    return;
-                }  
-
+                string phoneNumber = phoneNumberInput.Substring(Protocol.Length);
                 // Replace + prefix with a 00
                 if (phoneNumber.StartsWith("+")) {
                     phoneNumber = "00" + phoneNumber.Substring(1);
                 }
 
                 TAddress line = tapi.Addresses.SingleOrDefault(a => a.AddressName == lineToUse);
-                if (null == line) {
-                    Debug.WriteLine(String.Format("Unable to find TAPI line with name '{0}'!", lineToUse));
-                    if (MessageBox.Show(String.Format("Unable to find TAPI line with name '{0}'!\nDo you wish to select another TAPI line?", lineToUse), "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes) {
-                        ConfigTAPILine();
-                        goto AfterConfig;
-                    }
-                    return;
-                }
 
                 // Always assumes 0 prefix is needed to dial out.
                 TCall call = line.CreateCall("0" + phoneNumber, LINEADDRESSTYPES.PhoneNumber, TAPIMEDIATYPES.AUDIO);
