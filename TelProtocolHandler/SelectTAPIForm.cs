@@ -31,9 +31,8 @@ namespace TelProtocolHandler {
 
         private void button1_Click (object sender, EventArgs e) {
             try {
-                XElement xmlFile = XElement.Load(@"Config.xml");
-                xmlFile.Element("lineToUse").Value = comboBox1.SelectedItem.ToString();
-                xmlFile.Save(@"Config.xml");
+                Configuration.Container.lineToUse = comboBox1.SelectedItem.ToString();
+                Configuration.Save();
 
                 this.Close();
             }

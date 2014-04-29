@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Xml.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using JulMar.Tapi3;
@@ -10,11 +9,9 @@ namespace TelProtocolHandler {
     internal class Program {
 
         private static string Protocol = "tel:";
-        private static XElement xmlFile;
 
         private static void ConfigTAPILine () {
             Application.Run(new SelectTAPIForm());
-            xmlFile = XElement.Load(@"Config.xml");
             return;
         }
 
@@ -42,16 +39,16 @@ namespace TelProtocolHandler {
 
                 // Set line configuration value
                 TTapi tapi = new TTapi();
-                tapi.Initialize();   
+                tapi.Initialize();
 
-                xmlFile = XElement.Load(@"Config.xml");
-                if (xmlFile.Element("lineToUse").Value == "") {     // Select line configuration value if none is set
+                Configuration.Load();
+                if (Configuration.Container.lineToUse.Equals("")) {
                     Debug.WriteLine("No line configuration value set. Starting settings application...");
                     ConfigTAPILine();
                 }
 
             AfterConfig:
-                string lineToUse = xmlFile.Element("lineToUse").Value;
+                string lineToUse = Configuration.Container.lineToUse;
                 Debug.WriteLine(String.Format("Line configuration value is '{0}'.", lineToUse));
 
                 if (string.IsNullOrEmpty(lineToUse)) {
