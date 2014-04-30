@@ -37,8 +37,10 @@ namespace TelProtocolHandler {
                 if (MessageBox.Show(String.Format("Unable to find TAPI line with name '{0}'!\nDo you wish to select another TAPI line?", lineToUse), "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes) {
                     ConfigTAPILine();
                     return;
-                } else {
-                Environment.Exit(0); }
+                } 
+                else {
+                    Environment.Exit(0); 
+                }
             }
         }
 
