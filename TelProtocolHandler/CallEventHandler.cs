@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
 using JulMar.Tapi3;
 
 namespace TelProtocolHandler {
     public static class CallEventHandler {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static void CreateCall (string[] args) {
             string phoneNumber = CallEventHandler.NumberToCall(args);   // Phone number to call
@@ -23,7 +23,7 @@ namespace TelProtocolHandler {
             string phoneNumber = "";
 
             if (args.Length < 1) {
-                Debug.WriteLine("No arguments given.");
+                log.Error("No arguments given.");
                 if (MessageBox.Show("No arguments given.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK) {
                     Environment.Exit(0);
                 }
@@ -31,12 +31,12 @@ namespace TelProtocolHandler {
             else {
                 phoneNumber = args[0];
                 if (!phoneNumber.StartsWith(Protocol)) {
-                    Debug.WriteLine(String.Format("Unexpected input. Expected argument to start with '{0}'.", Protocol));
+                    log.Error(String.Format("Unexpected input. Expected argument to start with '{0}'.", Protocol));
                     if (MessageBox.Show(String.Format("Unexpected input. Expected argumet to start with '{0}'", Protocol), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK) {
                         Environment.Exit(0);
                     }    
                 }
-
+                
                 phoneNumber = phoneNumber.Substring(Protocol.Length);
                 // Replace + prefix with a 00
                 if (phoneNumber.StartsWith("+")) {
@@ -54,7 +54,7 @@ namespace TelProtocolHandler {
 
         private static void CheckForTAPILineErrors () {
             if (string.IsNullOrEmpty(Configuration.Container.lineToUse)) {
-                Debug.WriteLine("No line configuration value set. Starting settings application...");
+                log.Info("No line configuration value set. Starting settings application...");
                 CallTAPILineConfiguration();
                 return;
             }
@@ -62,7 +62,7 @@ namespace TelProtocolHandler {
             string lineToUse = Configuration.Container.lineToUse;
 
             if (string.IsNullOrEmpty(lineToUse)) {
-                Debug.WriteLine("No TAPI line selected!");
+                log.Error("No TAPI line selected!");
                 if (MessageBox.Show("No TAPI line selected!\nDo you wish to select a new TAPI line?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes) {
                     CallTAPILineConfiguration();
                 }
@@ -74,7 +74,7 @@ namespace TelProtocolHandler {
 
             TAddress line = tapi.Addresses.SingleOrDefault(a => a.AddressName == lineToUse);
             if (null == line) {
-                Debug.WriteLine(String.Format("Unable to find TAPI line with name '{0}'!", lineToUse));
+                log.Error(String.Format("Unable to find TAPI line with name '{0}'!", lineToUse));
                 if (MessageBox.Show(String.Format("Unable to find TAPI line with name '{0}'!\nDo you wish to select another TAPI line?", lineToUse), "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes) {
                     CallTAPILineConfiguration();
                     return;
@@ -92,7 +92,7 @@ namespace TelProtocolHandler {
 
         private static void InitiateCall (string phoneNumber) {
             string lineToUse = Configuration.Container.lineToUse;
-            Debug.WriteLine(String.Format("Creating call via line '{0}'.", lineToUse));
+            log.Info(String.Format("Creating call via line '{0}'.", lineToUse));
             TAddress line = tapi.Addresses.SingleOrDefault(a => a.AddressName == lineToUse);
 
             // Always assumes 0 prefix is needed to dial out.
@@ -101,11 +101,11 @@ namespace TelProtocolHandler {
                 call.Connect(false);
             }
             catch (TapiException ex) {
-                Debug.WriteLine(ex.Message);
+                log.Error("TapiException: ", ex);
                 return;
             }
 
-            Debug.WriteLine(String.Format("Calling '{0}'...", phoneNumber));
+            log.Info(String.Format("Calling '{0}'...", phoneNumber));
         }
     }
 }

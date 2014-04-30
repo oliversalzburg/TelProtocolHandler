@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,14 +12,16 @@ using JulMar.Tapi3;
 
 namespace TelProtocolHandler {
     public partial class SelectTAPIForm : Form {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public SelectTAPIForm () {
             InitializeComponent();
             TTapi tapi = new TTapi();
 
             int foundDevices = tapi.Initialize();
-            Debug.WriteLine("{0} devices found", foundDevices);
+            log.Info(String.Format("{0} devices found", foundDevices));
             foreach (TAddress addr in tapi.Addresses) {
-                Debug.WriteLine(addr.AddressName);
+                log.Info(String.Format("\t{0}", addr.AddressName));
                 comboBox1.Items.Add(addr.AddressName);
             }
         }
