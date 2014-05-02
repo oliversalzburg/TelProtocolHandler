@@ -56,7 +56,7 @@ namespace TelProtocolHandler {
             public string lineToUse;
 
             public ConfigContainer () {
-                lineToUse = "";
+                lineToUse = string.Empty;
             }
         }
     }
