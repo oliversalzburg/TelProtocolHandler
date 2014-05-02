@@ -30,10 +30,10 @@ namespace TelProtocolHandler {
                     Container = (ConfigContainer)xSerializer.Deserialize(stream);
                 }
             }
-            catch (FileNotFoundException e) {
+            catch (FileNotFoundException) {
                 log.Info("Configuration file not found. Using standard settings.");
             }
-            catch (InvalidOperationException e) {
+            catch (InvalidOperationException) {
                 log.Info("Could not read configuration file. Using standard settings. (check XML format?)");
             }
         }
@@ -45,7 +45,7 @@ namespace TelProtocolHandler {
                     xSerializer.Serialize(writer, Container);
                 }
             }
-            catch (UnauthorizedAccessException e) {
+            catch (UnauthorizedAccessException) {
                 log.Info("Could not write file 'Config.xml'. Settings will not be saved.");
                 if (MessageBox.Show("Could not write file 'Config.xml'. Settings will not be saved.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK) { }
                 return;
