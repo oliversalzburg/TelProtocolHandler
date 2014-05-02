@@ -19,6 +19,7 @@ namespace TelProtocolHandler {
             TTapi tapi = new TTapi();
 
             int foundDevices = tapi.Initialize();
+            log.Info("Searching for TAPI devices...");
             log.Info(String.Format("{0} devices found", foundDevices));
             foreach (TAddress addr in tapi.Addresses) {
                 log.Info(String.Format("\t{0}", addr.AddressName));
