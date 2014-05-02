@@ -26,7 +26,8 @@ namespace TelProtocolHandler {
         public static void Load () {
             XmlSerializer xSerializer = new XmlSerializer(typeof(ConfigContainer));
             try {
-                using (FileStream stream = File.OpenRead(@"Config.xml")) {
+                string configFilename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config.xml");
+                using( FileStream stream = File.OpenRead(configFilename) ) {
                     Container = (ConfigContainer)xSerializer.Deserialize(stream);
                 }
             }
@@ -41,7 +42,8 @@ namespace TelProtocolHandler {
         public static void Save () {
             XmlSerializer xSerializer = new XmlSerializer(typeof(ConfigContainer));
             try {
-                using (XmlWriter writer = XmlWriter.Create(@"Config.xml")) {
+                string configFilename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config.xml");
+                using( XmlWriter writer = XmlWriter.Create(configFilename) ) {
                     xSerializer.Serialize(writer, Container);
                 }
             }
