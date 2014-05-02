@@ -15,9 +15,7 @@ namespace TelProtocolHandler {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            log.Info("==============================");
-            log.Info("      Starting new call.      ");
-            log.Info("==============================");
+            log.Info("============== Application Start ==============");
             CallEventHandler.CreateCall(args);
         }
     }

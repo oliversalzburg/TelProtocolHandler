@@ -11,14 +11,36 @@ namespace TelProtocolHandler {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static void CreateCall (string[] args) {
-            string phoneNumber = CallEventHandler.NumberToCall(args);   // Phone number to call
-            Configuration.Load();                                       // Loads configuration file
-            InitializeTAPI();                                           // Initialize TAPI
-            CheckForTAPILineErrors();                                   // Checks for line errors
-            InitiateCall(phoneNumber);                                  // Initiates call
+            if (args.Length < 1)
+                AppSetup();                                                 // Add registry entry and start setup if application starts without arguments
+            else {
+                string phoneNumber = CallEventHandler.NumberToCall(args);   // Phone number to call
+                Configuration.Load();                                       // Loads configuration file
+                InitializeTAPI();                                           // Initialize TAPI
+                CheckForTAPILineErrors();                                   // Checks for line errors
+                InitiateCall(phoneNumber);                                  // Initiates call
+            }
         }
 
-        public static string NumberToCall (string[] args) {
+        private static void AppSetup () {
+            log.Info("Application runs without arguments. Starting setup...");
+
+            string registryKey = @"HKEY_CLASSES_ROOT\tel";
+            string registryValue = "TEL:Telephone Invocation";
+            Microsoft.Win32.Registry.SetValue(registryKey, string.Empty, registryValue, Microsoft.Win32.RegistryValueKind.String);
+            Microsoft.Win32.Registry.SetValue(registryKey, "URL Protocol", String.Empty, Microsoft.Win32.RegistryValueKind.String);
+
+            registryKey = @"HKEY_CLASSES_ROOT\tel\shell\open\command";
+            registryValue = "\"" + Application.StartupPath + "\\TelProtocolHandler.exe\" \"%1\"";
+            Microsoft.Win32.Registry.SetValue(registryKey, string.Empty, registryValue, Microsoft.Win32.RegistryValueKind.String);
+
+            log.Info("Registry has been set up.");
+            Application.Run(new SelectTAPIForm());
+            log.Info("Standard line has been set up. TelProtocolHandler is ready to use.");
+            MessageBox.Show("TelProtocolHandler is now ready to use.", "TelProtocolHandler", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private static string NumberToCall (string[] args) {
             string Protocol = "tel:";
             string phoneNumber = "";
 
@@ -34,9 +56,9 @@ namespace TelProtocolHandler {
                     log.Error(String.Format("Unexpected input. Expected argument to start with '{0}'.", Protocol));
                     if (MessageBox.Show(String.Format("Unexpected input. Expected argumet to start with '{0}'", Protocol), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK) {
                         Environment.Exit(0);
-                    }    
+                    }
                 }
-                
+
                 phoneNumber = phoneNumber.Substring(Protocol.Length);
                 // Replace + prefix with a 00
                 if (phoneNumber.StartsWith("+")) {
