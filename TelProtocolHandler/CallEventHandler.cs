@@ -11,9 +11,9 @@ namespace TelProtocolHandler {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static void CreateCall (string[] args) {
-            if (args.Length < 1)
+            if (args.Length < 1) {
                 AppSetup();                                                 // Add registry entry and start setup if application starts without arguments
-            else {
+            } else {
                 string phoneNumber = CallEventHandler.NumberToCall(args);   // Phone number to call
                 Configuration.Load();                                       // Loads configuration file
                 InitializeTAPI();                                           // Initialize TAPI
