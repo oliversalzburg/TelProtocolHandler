@@ -1,0 +1,5 @@
+C:\Users\Lucian\Desktop\TelProtocHandler\TelProtocolHandlerSetup\bin\Debug\TelProtocolHandlerSetup.exe.config
+C:\Users\Lucian\Desktop\TelProtocHandler\TelProtocolHandlerSetup\bin\Debug\TelProtocolHandlerSetup.exe
+C:\Users\Lucian\Desktop\TelProtocHandler\TelProtocolHandlerSetup\bin\Debug\TelProtocolHandlerSetup.pdb
+C:\Users\Lucian\Desktop\TelProtocHandler\TelProtocolHandlerSetup\obj\Debug\TelProtocolHandlerSetup.exe
+C:\Users\Lucian\Desktop\TelProtocHandler\TelProtocolHandlerSetup\obj\Debug\TelProtocolHandlerSetup.pdb

@@ -25,14 +25,11 @@ namespace TelProtocolHandler {
         private static void AppSetup () {
             log.Info("Application runs without arguments. Starting setup...");
 
-            string registryKey = @"HKEY_CLASSES_ROOT\tel";
-            string registryValue = "TEL:Telephone Invocation";
-            Microsoft.Win32.Registry.SetValue(registryKey, string.Empty, registryValue, Microsoft.Win32.RegistryValueKind.String);
-            Microsoft.Win32.Registry.SetValue(registryKey, "URL Protocol", String.Empty, Microsoft.Win32.RegistryValueKind.String);
-
-            registryKey = @"HKEY_CLASSES_ROOT\tel\shell\open\command";
-            registryValue = "\"" + Application.StartupPath + "\\TelProtocolHandler.exe\" \"%1\"";
-            Microsoft.Win32.Registry.SetValue(registryKey, string.Empty, registryValue, Microsoft.Win32.RegistryValueKind.String);
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            process.StartInfo.FileName = "TelProtocolHandlerSetup.exe";
+            process.StartInfo.Verb = "runas";
+            process.Start();
 
             log.Info("Registry has been set up.");
             Application.Run(new SelectTAPIForm());
