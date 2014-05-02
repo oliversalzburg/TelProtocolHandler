@@ -1,5 +1,7 @@
 TelProtocolHandler/bin/
 TelProtocolHandler/obj/
+TelProtocolHandlerSetup/bin/
+TelProtocolHandlerSetup/obj/
 RegisterProtocolHandler.reg
 *.suo
 *.user
