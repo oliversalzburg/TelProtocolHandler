@@ -51,7 +51,7 @@ namespace TelProtocolHandler {
                 phoneNumber = args[0];
                 if (!phoneNumber.StartsWith(Protocol)) {
                     log.Error(String.Format("Unexpected input. Expected argument to start with '{0}'.", Protocol));
-                    if (MessageBox.Show(String.Format("Unexpected input. Expected argumet to start with '{0}'", Protocol), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK) {
+                    if (MessageBox.Show(String.Format("Unexpected input. Expected argument to start with '{0}'", Protocol), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK) {
                         Environment.Exit(0);
                     }
                 }
