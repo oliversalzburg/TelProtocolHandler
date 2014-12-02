@@ -8,7 +8,7 @@ namespace TelProtocolHandlerSetup {
             Registry.SetValue( @"HKEY_CLASSES_ROOT\tel", string.Empty, protocolValue, RegistryValueKind.String );
             Registry.SetValue( @"HKEY_CLASSES_ROOT\tel", "URL Protocol", String.Empty, RegistryValueKind.String );
 
-            string binaryName = AppDomain.CurrentDomain.FriendlyName;
+            const string binaryName = "tel.exe";
             string command = string.Format( "\"{0}{1}\" \"%1\"", AppDomain.CurrentDomain.BaseDirectory, binaryName );
             Registry.SetValue( @"HKEY_CLASSES_ROOT\tel\shell\open\command", string.Empty, command, RegistryValueKind.String );
         }
