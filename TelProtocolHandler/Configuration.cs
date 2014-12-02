@@ -21,16 +21,16 @@ namespace TelProtocolHandler {
         }
 
         public static void Load() {
-            XmlSerializer xSerializer = new XmlSerializer( typeof( ConfigContainer ) );
+            XmlSerializer xmlSerializer = new XmlSerializer( typeof( ConfigContainer ) );
             try {
                 string configFilename = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "Config.xml" );
                 using( FileStream stream = File.OpenRead( configFilename ) ) {
-                    Container = (ConfigContainer)xSerializer.Deserialize( stream );
+                    Container = (ConfigContainer)xmlSerializer.Deserialize( stream );
                 }
             } catch( FileNotFoundException ) {
-                log.Info( "Configuration file not found. Using standard settings." );
+                log.Warn( "Configuration file not found. Using standard settings." );
             } catch( InvalidOperationException ) {
-                log.Info( "Could not read configuration file. Using standard settings. (check XML format?)" );
+                log.Warn( "Could not read configuration file. Using standard settings. (check XML format?)" );
             }
         }
 
@@ -42,17 +42,16 @@ namespace TelProtocolHandler {
                     xSerializer.Serialize( writer, Container );
                 }
             } catch( UnauthorizedAccessException ) {
-                log.Info( "Could not write file 'Config.xml'. Settings will not be saved." );
-                if( MessageBox.Show( "Could not write file 'Config.xml'. Settings will not be saved.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error ) == DialogResult.OK ) { }
-                return;
+                log.Error( "Could not write file 'Config.xml'. Settings will not be saved." );
+                MessageBox.Show( "Could not write file 'Config.xml'. Settings will not be saved.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
             }
         }
 
         public class ConfigContainer {
-            public string lineToUse;
+            public string LineToUse;
 
             public ConfigContainer() {
-                lineToUse = string.Empty;
+                LineToUse = string.Empty;
             }
         }
     }
