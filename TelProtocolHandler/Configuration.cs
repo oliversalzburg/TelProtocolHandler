@@ -10,6 +10,14 @@ namespace TelProtocolHandler {
 
         private static ConfigContainer _container;
 
+        private static string ConfigFileName {
+            get {
+                string basePath = Environment.GetFolderPath( Environment.SpecialFolder.LocalApplicationData );
+                string path = Path.Combine( basePath, "TelProtocolHandler" );
+                return Path.Combine( path, "config.xml" );
+            }
+        }
+
         public static ConfigContainer Container {
             get {
                 if( null == _container ) {
@@ -23,11 +31,12 @@ namespace TelProtocolHandler {
         public static void Load() {
             XmlSerializer xmlSerializer = new XmlSerializer( typeof( ConfigContainer ) );
             try {
-                string configFilename = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "Config.xml" );
-                using( FileStream stream = File.OpenRead( configFilename ) ) {
+                using( FileStream stream = File.OpenRead( ConfigFileName ) ) {
                     Container = (ConfigContainer)xmlSerializer.Deserialize( stream );
                 }
             } catch( FileNotFoundException ) {
+                log.Warn( "Configuration file not found. Using standard settings." );
+            } catch( DirectoryNotFoundException ) {
                 log.Warn( "Configuration file not found. Using standard settings." );
             } catch( InvalidOperationException ) {
                 log.Warn( "Could not read configuration file. Using standard settings. (check XML format?)" );
@@ -37,8 +46,10 @@ namespace TelProtocolHandler {
         public static void Save() {
             XmlSerializer xSerializer = new XmlSerializer( typeof( ConfigContainer ) );
             try {
-                string configFilename = Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "Config.xml" );
-                using( XmlWriter writer = XmlWriter.Create( configFilename ) ) {
+                // Create the directory for the configuration file.
+                Directory.CreateDirectory( Path.GetDirectoryName( ConfigFileName ) );
+
+                using( XmlWriter writer = XmlWriter.Create( ConfigFileName ) ) {
                     xSerializer.Serialize( writer, Container );
                 }
             } catch( UnauthorizedAccessException ) {
