@@ -9,14 +9,15 @@ namespace TelProtocolHandler {
         private static TTapi tapi = new TTapi();
 
         public static void CreateCall( string[] args ) {
+            tapi.Initialize();
+
             if( args.Length < 1 ) {
                 // Set application up as default tel: handler.
                 RunSetup();
+                return;
             }
 
             Configuration.Load();
-
-            tapi.Initialize();
             CheckForTapiLineErrors();
 
             // Convert input parameters to actual number we want to dial.
@@ -37,6 +38,7 @@ namespace TelProtocolHandler {
             };
             process.Start();
             log.Info( "Setup completed." );
+            CallTapiLineConfiguration();
         }
 
         private static string NumberToCall( string[] args ) {
