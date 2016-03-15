@@ -5,3 +5,4 @@ TelProtocolHandlerSetup/obj/
 RegisterProtocolHandler.reg
 *.suo
 *.user
+TelProtocolHandler/publish/
