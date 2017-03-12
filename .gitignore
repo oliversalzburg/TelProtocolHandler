@@ -1,8 +1,12 @@
+bin/
+
 TelProtocolHandler/bin/
 TelProtocolHandler/obj/
+TelProtocolHandler/publish/
+
 TelProtocolHandlerSetup/bin/
 TelProtocolHandlerSetup/obj/
+
 RegisterProtocolHandler.reg
 *.suo
 *.user
-TelProtocolHandler/publish/
