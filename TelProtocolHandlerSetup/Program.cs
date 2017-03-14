@@ -24,7 +24,7 @@ namespace TelProtocolHandlerSetup {
 			WriteClassesRoot( @"tel", "URL Protocol", string.Empty );
 
 			const string binaryName = "tel.exe";
-			string command = $"\"{AppDomain.CurrentDomain.BaseDirectory}{binaryName}\" \"%1\"";
+			string command = "\"{AppDomain.CurrentDomain.BaseDirectory}{binaryName}\" \"%1\"";
 			WriteClassesRoot( @"tel\shell\open\command", string.Empty, command );
 
 			// For Windows 8+, register as a choosable protocol handler.
@@ -43,13 +43,22 @@ namespace TelProtocolHandlerSetup {
 					command );
 
 				WriteLocalMachine(
+					@"SOFTWARE\TelProtocolHandler\Capabilities",
+					"ApplicationName",
+					"TelProtocolHandler" );
+				WriteLocalMachine(
+					@"SOFTWARE\TelProtocolHandler\Capabilities",
+					"ApplicationDescription",
+					"Invokes a TAPI line with the supplied phone number." );
+				WriteLocalMachine(
 					@"SOFTWARE\TelProtocolHandler\Capabilities\URLAssociations",
 					"tel",
 					"TelProtocolHandler" );
+
 				WriteLocalMachine(
 					@"SOFTWARE\RegisteredApplications",
 					"TelProtocolHandler",
-					@"HKEY_LOCAL_MACHINE\SOFTWARE\TelProtocolHandler\Capabilities" );
+					@"SOFTWARE\TelProtocolHandler\Capabilities" );
 			}
 
 			Console.WriteLine( "The process completed." );
@@ -66,6 +75,7 @@ namespace TelProtocolHandlerSetup {
 				RegistryKey classRoot = RegistryKey.OpenBaseKey( RegistryHive.ClassesRoot, view );
 				RegistryKey key = classRoot.CreateSubKey( @where );
 				key.SetValue( name, value, RegistryValueKind.String );
+
 			} catch( Exception e ) {
 				Console.WriteLine( "\t" + e.Message );
 			}
@@ -86,6 +96,7 @@ namespace TelProtocolHandlerSetup {
 				RegistryKey classRoot = RegistryKey.OpenBaseKey( RegistryHive.LocalMachine, view );
 				RegistryKey key = classRoot.CreateSubKey( @where );
 				key.SetValue( name, value, RegistryValueKind.String );
+
 			} catch( Exception e ) {
 				Console.WriteLine( "\t" + e.Message );
 			}
