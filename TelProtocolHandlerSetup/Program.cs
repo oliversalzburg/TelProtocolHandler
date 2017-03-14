@@ -23,8 +23,7 @@ namespace TelProtocolHandlerSetup {
 			WriteClassesRoot( @"tel", string.Empty, protocolValue );
 			WriteClassesRoot( @"tel", "URL Protocol", string.Empty );
 
-			const string binaryName = "tel.exe";
-			string command = "\"{AppDomain.CurrentDomain.BaseDirectory}{binaryName}\" \"%1\"";
+			string command = string.Format( "\"{0}tel.exe\" \"%1\"", AppDomain.CurrentDomain.BaseDirectory );
 			WriteClassesRoot( @"tel\shell\open\command", string.Empty, command );
 
 			// For Windows 8+, register as a choosable protocol handler.
