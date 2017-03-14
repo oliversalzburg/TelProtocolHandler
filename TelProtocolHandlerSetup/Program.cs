@@ -6,20 +6,12 @@ namespace TelProtocolHandlerSetup {
 		private static void Main( string[] args ) {
 			// Register as the default handler for the tel: protocol.
 			const string protocolValue = "TEL:Telephone Invocation";
-			Registry.SetValue(
-				@"HKEY_CLASSES_ROOT\tel",
-				string.Empty,
-				protocolValue,
-				RegistryValueKind.String );
-			Registry.SetValue(
-				@"HKEY_CLASSES_ROOT\tel",
-				"URL Protocol",
-				String.Empty,
-				RegistryValueKind.String );
+			WriteString( @"HKEY_CLASSES_ROOT\tel", string.Empty, protocolValue );
+			WriteString( @"HKEY_CLASSES_ROOT\tel", "URL Protocol", String.Empty );
 
 			const string binaryName = "tel.exe";
-			string command = string.Format( "\"{0}{1}\" \"%1\"", AppDomain.CurrentDomain.BaseDirectory, binaryName );
-			Registry.SetValue( @"HKEY_CLASSES_ROOT\tel\shell\open\command", string.Empty, command, RegistryValueKind.String );
+			string command = $"\"{AppDomain.CurrentDomain.BaseDirectory}{binaryName}\" \"%1\"";
+			WriteString( @"HKEY_CLASSES_ROOT\tel\shell\open\command", string.Empty, command );
 
 			// For Windows 8+, register as a choosable protocol handler.
 
@@ -27,28 +19,29 @@ namespace TelProtocolHandlerSetup {
 			Version win8Version = new Version( 6, 2, 9200, 0 );
 			if( Environment.OSVersion.Platform == PlatformID.Win32NT &&
 			    Environment.OSVersion.Version >= win8Version ) {
-				Registry.SetValue(
+				WriteString(
 					@"HKEY_LOCAL_MACHINE\SOFTWARE\Classes\TelProtocolHandler",
 					string.Empty,
-					protocolValue,
-					RegistryValueKind.String );
-				Registry.SetValue(
+					protocolValue );
+				WriteString(
 					@"HKEY_LOCAL_MACHINE\SOFTWARE\Classes\TelProtocolHandler\shell\open\command",
 					string.Empty,
-					command,
-					RegistryValueKind.String );
+					command );
 
-				Registry.SetValue(
+				WriteString(
 					@"HKEY_LOCAL_MACHINE\SOFTWARE\TelProtocolHandler\Capabilities\URLAssociations",
 					"tel",
-					"TelProtocolHandler",
-					RegistryValueKind.String );
-				Registry.SetValue(
+					"TelProtocolHandler" );
+				WriteString(
 					@"HKEY_LOCAL_MACHINE\SOFTWARE\RegisteredApplications",
 					"TelProtocolHandler",
-					@"SOFTWARE\TelProtocolHandler\Capabilities",
-					RegistryValueKind.String );
+					@"SOFTWARE\TelProtocolHandler\Capabilities" );
 			}
+		}
+
+		private static void WriteString( string where, string name, string value ) {
+			Console.WriteLine( "{0} → {1} = {2}", @where, name, value );
+			Registry.SetValue( where, name, value, RegistryValueKind.String );
 		}
 	}
 }
